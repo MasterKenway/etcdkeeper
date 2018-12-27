@@ -31,9 +31,14 @@ Usage of etcdkeeper.exe:
         enable tls to connect etcd server
 ```
 
-# run
+## run
 ```
 etcdkeeper.exe -etcd 192.168.0.100:2379
+```
+
+## docker
+```
+docker run -d --restart=always --net=host linimbus/etcdkeeper:latest -etcd 192.168.0.100:2379
 ```
 
 * Open your browser and enter the address: http://127.0.0.1:8000/etcdkeeper
