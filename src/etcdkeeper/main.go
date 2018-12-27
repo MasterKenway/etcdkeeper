@@ -87,8 +87,14 @@ func main() {
 // v2 api
 func connectV2(w http.ResponseWriter, r *http.Request) {
 
+	urls := make([]string, 0)
+	epts := strings.Split(endpoints, ",")
+	for _, v := range epts {
+		urls = append(urls, "http://"+v)
+	}
+
 	cfg := client.Config{
-		Endpoints:               strings.Split(endpoints, ","),
+		Endpoints:               urls,
 		HeaderTimeoutPerRequest: 5 * time.Second,
 		//Username:"test",
 		//Password:"test",
