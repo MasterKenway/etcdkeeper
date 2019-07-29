@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net"
 
 	"strconv"
 	"strings"
@@ -86,7 +87,8 @@ func main() {
 
 // v2 api
 func connectV2(w http.ResponseWriter, r *http.Request) {
-
+	var err error
+	
 	urls := make([]string, 0)
 	epts := strings.Split(endpoints, ",")
 	for _, v := range epts {
