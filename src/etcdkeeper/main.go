@@ -93,11 +93,37 @@ func connectV2(w http.ResponseWriter, r *http.Request) {
 		urls = append(urls, "http://"+v)
 	}
 
+	// use tls if usetls is true
+	var tlsConfig *tls.Config
+	if usetls {
+		tlsInfo := transport.TLSInfo{
+			CertFile:      cert,
+			KeyFile:       keyfile,
+			TrustedCAFile: cacert,
+			InsecureSkipVerify: true,
+		}
+		tlsConfig, err = tlsInfo.ClientConfig()
+		if err != nil {
+			log.Println(err.Error())
+		}
+	}
+
+	defaultHTTPTransport := &http.Transport{
+		Proxy: http.ProxyFromEnvironment,
+		Dial: (&net.Dialer{
+			Timeout:   30 * time.Second,
+			KeepAlive: 30 * time.Second,
+		}).Dial,
+		TLSHandshakeTimeout: 10 * time.Second,
+		TLSClientConfig:     tlsConfig,
+	}
+
+	var defaultTransport client.CancelableTransport = defaultHTTPTransport
+
 	cfg := client.Config{
 		Endpoints:               urls,
 		HeaderTimeoutPerRequest: 5 * time.Second,
-		//Username:"test",
-		//Password:"test",
+		Transport:               defaultTransport,
 	}
 
 	c, err := client.New(cfg)
@@ -276,6 +302,7 @@ func connect(w http.ResponseWriter, r *http.Request) {
 			CertFile:      cert,
 			KeyFile:       keyfile,
 			TrustedCAFile: cacert,
+			InsecureSkipVerify: true,
 		}
 		tlsConfig, err = tlsInfo.ClientConfig()
 		if err != nil {
