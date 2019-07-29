@@ -92,7 +92,11 @@ func connectV2(w http.ResponseWriter, r *http.Request) {
 	urls := make([]string, 0)
 	epts := strings.Split(endpoints, ",")
 	for _, v := range epts {
-		urls = append(urls, "http://"+v)
+		if usetls {
+			urls = append(urls, "https://"+v)
+		}else {
+			urls = append(urls, "http://"+v)
+		}
 	}
 
 	// use tls if usetls is true
