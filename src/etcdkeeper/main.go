@@ -14,9 +14,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/coreos/etcd/client"
-	"github.com/coreos/etcd/clientv3"
-	"github.com/coreos/etcd/pkg/transport"
+	client "go.etcd.io/etcd/client"
+	clientv3 "go.etcd.io/etcd/clientv3"
+	"go.etcd.io/etcd/pkg/transport"
 )
 
 var (
