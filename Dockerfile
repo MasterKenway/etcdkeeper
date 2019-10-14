@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:1.12.10-alpine3.9
 
 RUN apk add -U git \
     && go get github.com/golang/dep/...
