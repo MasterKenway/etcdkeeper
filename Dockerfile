@@ -1,9 +1,9 @@
-FROM golang:1.9-alpine as builder
+FROM golang:latest
 
 RUN apk add -U git \
     && go get github.com/golang/dep/...
 
-WORKDIR /go/src/github.com/evildecay/etcdkeeper
+WORKDIR /go/src/github.com/lixiangyun/etcdkeeper
 
 ADD src ./
 ADD Gopkg.* ./
@@ -17,7 +17,7 @@ RUN apk add --no-cache ca-certificates
 RUN apk add --no-cache ca-certificates
 
 WORKDIR /etcdkeeper
-COPY --from=builder /go/src/github.com/evildecay/etcdkeeper/etcdkeeper.bin .
+COPY --from=builder /go/src/github.com/lixiangyun/etcdkeeper/etcdkeeper.bin .
 ADD assets assets
 
 EXPOSE 8000
