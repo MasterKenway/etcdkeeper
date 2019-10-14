@@ -1,4 +1,4 @@
-FROM golang:1.12.10-alpine3.9
+FROM golang:1.12.10-alpine3.9 as builder
 
 RUN apk add -U git \
     && go get github.com/golang/dep/...
